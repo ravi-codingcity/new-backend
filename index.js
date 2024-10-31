@@ -15,9 +15,12 @@ const PORT = process.env.PORT || 5000;
 let cachedCount = null; // In-memory cache for visitor count
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch((error) => console.error('MongoDB connection error:', error));
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 15000, // 15 seconds
+  socketTimeoutMS: 45000, // 45 seconds
+})
+.then(() => console.log('MongoDB connected'))
+.catch((error) => console.error('MongoDB connection error:', error));
 
 // Initialize cache from DB
 const updateCache = async () => {
