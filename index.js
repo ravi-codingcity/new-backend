@@ -15,10 +15,7 @@ const PORT = process.env.PORT || 5000;
 let cachedCount = null; // In-memory cache for visitor count
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 20000, // Increase the server selection timeout
-  socketTimeoutMS: 45000 // Increase the socket timeout
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('MongoDB connected'))
 .catch((error) => console.error('MongoDB connection error:', error));
 
@@ -27,7 +24,7 @@ const updateCache = async () => {
   try {
     let counter = await Counter.findOne();
     if (!counter) {
-      counter = await Counter.create({ count: 10 });
+      counter = await Counter.create({ count: 0 });
     }
     cachedCount = counter.count;
     console.log("Cache initialized:", cachedCount);
@@ -56,7 +53,7 @@ const incrementCounter = async () => {
 updateCache();
 
 // Schedule increment every hour (for testing, set to 10 seconds)
-setInterval(incrementCounter, 10000);
+setInterval(incrementCounter, 120000);
 
 // Use counter routes
 app.use("/api", counterRoutes);
