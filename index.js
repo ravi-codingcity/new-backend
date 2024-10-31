@@ -16,12 +16,7 @@ let cachedCount = null; // In-memory cache for visitor count
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 20000,
-    socketTimeoutMS: 45000,
-  })
+  .connect(process.env.MONGO_URI,)
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.error("MongoDB connection error:", error));
 
