@@ -54,7 +54,7 @@ const incrementCounter = async () => {
 updateCache();
 
 // Schedule increment every hour (for testing, set to 10 seconds)
-setInterval(incrementCounter, 180000);
+setInterval(incrementCounter, 600000);
 
 // Use counter routes
 app.use("/api", counterRoutes);
