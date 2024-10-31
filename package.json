@@ -5,11 +5,10 @@
   "engines": {
     "node": "20.x"
   },
- "scripts": {
-  "start": "node index.js",
-  "dev": "nodemon index.js"
-}
-,
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "author": "",
   "license": "ISC",
   "description": "",
@@ -19,6 +18,7 @@
     "express": "^4.21.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
+    "redis": "^4.7.0",
     "vercel": "^37.14.0"
   }
 }
