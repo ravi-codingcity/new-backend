@@ -1,4 +1,3 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -16,7 +15,7 @@ let cachedCount = null; // In-memory cache for visitor count
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI,)
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.error("MongoDB connection error:", error));
 
@@ -34,7 +33,7 @@ const updateCache = async () => {
   }
 };
 
-// Increment counter function
+// Increment counter function (runs every 30 minutes)
 const incrementCounter = async () => {
   try {
     cachedCount += 1; // Update in-memory cache
@@ -50,13 +49,22 @@ const incrementCounter = async () => {
   }
 };
 
-// Load initial count value into cache
+// Load initial count value into cache on startup
 updateCache();
 
-// Schedule increment every hour (for testing, set to 10 seconds)
-setInterval(incrementCounter, 600000);
+// Schedule increment every 30 minutes
+setInterval(incrementCounter, 1800000); // 30 minutes in milliseconds
 
-// Use counter routes
+// Route to get the visitor count without incrementing
+app.get("/api/count", (req, res) => {
+  if (cachedCount === null) {
+    // If cache not initialized, wait until it's done
+    return res.status(500).json({ error: "Cache not initialized yet" });
+  }
+  res.json({ count: cachedCount });
+});
+
+// Use counter routes (optional, in case there are other counter routes)
 app.use("/api", counterRoutes);
 
 app.listen(PORT, () => {
