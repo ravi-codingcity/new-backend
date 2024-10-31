@@ -15,10 +15,8 @@ const PORT = process.env.PORT || 5000;
 let cachedCount = null; // In-memory cache for visitor count
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose
+  .connect(process.env.MONGO_URI, {})
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.error("MongoDB connection error:", error));
 
@@ -43,7 +41,10 @@ const incrementCounter = async () => {
     console.log("Counter incremented in memory:", cachedCount);
 
     // Update MongoDB
-    await Counter.findOneAndUpdate({}, { count: cachedCount, updatedAt: Date.now() });
+    await Counter.findOneAndUpdate(
+      {},
+      { count: cachedCount, updatedAt: Date.now() }
+    );
   } catch (error) {
     console.error("Error incrementing counter:", error);
   }
