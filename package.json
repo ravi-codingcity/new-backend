@@ -13,12 +13,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cache-manager": "^6.1.2",
+    "cache-manager-mongoose": "^1.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
-    "redis": "^4.7.0",
-    "vercel": "^37.14.0"
+    "vercel": "^32.3.0"
   }
 }
