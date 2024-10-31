@@ -8,6 +8,9 @@ const router = express.Router();
 router.get("/count", async (req, res) => {
   try {
     const counter = await Counter.findOne();
+    if (!counter) {
+      return res.status(404).json({ error: "Counter not found" });
+    }
     res.json({ count: counter.count });
   } catch (error) {
     console.error("Error fetching count:", error);
@@ -15,4 +18,6 @@ router.get("/count", async (req, res) => {
   }
 });
 
+
 module.exports = router;
+
