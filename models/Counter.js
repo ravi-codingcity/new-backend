@@ -1,10 +1,10 @@
-// models/Counter.js
 const mongoose = require("mongoose");
 
 const counterSchema = new mongoose.Schema({
   count: {
     type: Number,
-    default: 10, // Starting value
+    required: true,
+    default: 0,
   },
   updatedAt: {
     type: Date,
