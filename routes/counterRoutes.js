@@ -14,12 +14,14 @@ router.get("/count", async (req, res) => {
         cachedCount = counter.count; // Update the cache with MongoDB value
       } else {
         cachedCount = 0; // Default if no counter exists
+        console.error("Counter document not found, initialized to 0");
       }
     }
+    
     // Return the cached count
     res.json({ count: cachedCount });
   } catch (error) {
-    console.error("Error fetching count:", error);
+    console.error("Error fetching count from MongoDB:", error);
     res.status(500).json({ error: "Failed to fetch count" });
   }
 });
