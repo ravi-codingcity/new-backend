@@ -45,7 +45,17 @@ async function updateCache() {
 
 // Increment function scheduled to run every 30 minutes
 setInterval(async () => {
-  cachedCount += 1;
-  console.log("Counter incremented in memory:", cachedCount);
-  await Counter.findOneAndUpdate({}, { count: cachedCount, updatedAt: Date.now() });
-}, 1800000);
+  try {
+    // Increment in-memory cache
+    cachedCount += 1;
+    console.log("Counter incremented in memory:", cachedCount);
+    
+    // Update MongoDB
+    await Counter.findOneAndUpdate({}, { count: cachedCount, updatedAt: Date.now() });
+
+    // Update the cache with the new count
+    cachedCount = cachedCount; // This line may seem redundant but keeps it clear
+  } catch (error) {
+    console.error("Error incrementing counter:", error);
+  }
+}, 60000); // 30 minutes in milliseconds
