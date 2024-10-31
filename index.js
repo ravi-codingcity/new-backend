@@ -46,7 +46,7 @@ async function incrementCounter() {
   app.use("/api", counterRoutes); // Use counter routes
 
   // Set interval to increment counter every 10 minutes (600000 milliseconds)
-  setInterval(incrementCounter, 60000);
+  setInterval(incrementCounter, 3600000);
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
